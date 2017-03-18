@@ -3,6 +3,7 @@ package me.aaronebnoether;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.TextFlow;
+import me.aaronebnoether.SyntaxHighlighter.Highlighter;
 
 import java.io.File;
 
@@ -14,8 +15,8 @@ public class Document extends Tab{
     public Document(File file) {
         setText(file.getName());
         this.file = file;
-
         initComponents();
+        setText();
     }
 
     private void initComponents() {
@@ -26,6 +27,6 @@ public class Document extends Tab{
     }
 
     private void setText() {
-
+        textFlow.getChildren().addAll(Highlighter.highlight("Das ist ein Test"));
     }
 }
