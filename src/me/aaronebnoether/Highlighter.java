@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Highlighter {
 
-    public static ArrayList<Text> highlight(String text) {
+    public static ArrayList<Text> highlight(ArrayList<Text> texts) {
         ArrayList<Text> returnTexts = new ArrayList<>();
         for (Text text : texts) {
             if (text.getText().equals("public"))
@@ -15,9 +15,5 @@ public class Highlighter {
             returnTexts.add(text);
         }
         return returnTexts;
-    }
-
-    private static void getWords(String text) {
-
     }
 }
