@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import me.aaronebnoether.SyntaxHighlighter.Highlighter;
 
 import java.io.File;
 
