@@ -1,8 +1,14 @@
 package me.aaronebnoether;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.TextFlow;
 import me.aaronebnoether.SyntaxHighlighter.Highlighter;
 
@@ -24,6 +30,8 @@ public class Document extends Tab{
     private void initComponents() {
         pane = new BorderPane();
         textFlow = new TextFlow();
+        textFlow.setBackground(new Background(new BackgroundFill(Color.web("2C2C2C"), CornerRadii.EMPTY, Insets.EMPTY)));
+        textFlow.setPrefSize();
         textFlowWrapper = new ScrollPane(textFlow);
         pane.setCenter(textFlowWrapper);
         setContent(pane);
