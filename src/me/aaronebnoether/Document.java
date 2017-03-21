@@ -31,8 +31,9 @@ public class Document extends Tab{
         pane = new BorderPane();
         textFlow = new TextFlow();
         textFlow.setBackground(new Background(new BackgroundFill(Color.web("2C2C2C"), CornerRadii.EMPTY, Insets.EMPTY)));
-        textFlow.setPrefSize();
         textFlowWrapper = new ScrollPane(textFlow);
+        textFlowWrapper.setFitToHeight(true);
+        textFlowWrapper.setFitToWidth(true);
         pane.setCenter(textFlowWrapper);
         setContent(pane);
     }
