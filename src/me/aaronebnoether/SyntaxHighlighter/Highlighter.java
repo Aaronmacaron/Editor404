@@ -184,7 +184,7 @@ public class Highlighter {
                 "|default|do|double|else|enmu|extends|final|finally|float|for|goto|if|implements|import|instanceof|int" +
                 "|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch" +
                 "|synchronized|this|throw|throws|transient|try|void|volatile|while|false|null|true)\\b", "KW"));
-        returnList.add(new Rule("\"[^\\\"]+\"|'[^\\\"]+'", "ST"));
+        returnList.add(new Rule("\"([^\\\"]+)*\"|'[^\\\"]+'", "ST"));
         returnList.add(new Rule("//.*|/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+/", "CO"));
         returnList.add(new Rule("(\\(|\\)|=|&|\\*|\\+|\\-|\\/|\\<|\\>|\\{|\\}|\\;|\\|)", "SC"));
         return returnList;

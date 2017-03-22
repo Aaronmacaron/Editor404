@@ -24,6 +24,7 @@ public class GUIManager extends Application{
     Scene scene;
     Stage stage;
     File fileToOpen;
+    TabPane tabPane;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -42,9 +43,13 @@ public class GUIManager extends Application{
 
         MenuItem openMenuItem = new MenuItem("Open");
         openMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
+        openMenuItem.setOnAction(value -> {
+            File file = new FileChooser().showOpenDialog(scene.getWindow());
+            tabPane.getTabs().add(new Document(file));
+        });
 
-        TabPane tabPane = new TabPane();
-        tabPane.getTabs().addAll(new Document(fileToOpen));
+        tabPane = new TabPane();
+        tabPane.getTabs().add(new Document(fileToOpen));
 
         fileMenu.getItems().addAll(openMenuItem);
         menuBar.getMenus().addAll(fileMenu);
