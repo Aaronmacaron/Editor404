@@ -14,13 +14,12 @@ public class Highlighter {
     private final static String ST_FLAG = "\\:s:\\";
     private final static String ST_END_FLAG = "\\.s.\\";
     private final static String NM_FLAG = "\\:n:\\";
-    private final static String NM_END_FLAG = "\\.n.\\";
     private final static String CO_FLAG = "\\:c:\\";
     private final static String CO_END_FLAG = "\\.c.\\";
     private final static String SC_FLAG = "\\:a:\\";
     private final static String SC_END_FLAG = "\\.a.\\";
 
-    public static ArrayList<Text> texts(String text){
+    public static ArrayList<Text> getHighlightedTexts(String text){
         return getTextsOfHighlightedString(getHighlightedString(text));
     }
 
