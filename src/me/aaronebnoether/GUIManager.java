@@ -49,6 +49,7 @@ public class GUIManager extends Application{
         });
 
         tabPane = new TabPane();
+        tabPane.getTabs().add(new InfoTab());
         tabPane.getTabs().add(new Document(fileToOpen));
 
         fileMenu.getItems().addAll(openMenuItem);
