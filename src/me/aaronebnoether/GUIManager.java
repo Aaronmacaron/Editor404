@@ -1,19 +1,17 @@
 package me.aaronebnoether;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import me.aaronebnoether.SyntaxHighlighter.Highlighter;
 
 import java.io.File;
 
@@ -23,12 +21,10 @@ public class GUIManager extends Application{
     BorderPane root;
     Scene scene;
     Stage stage;
-    File fileToOpen;
     TabPane tabPane;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        showStartDialog();
         init(primaryStage);
     }
 
@@ -50,7 +46,6 @@ public class GUIManager extends Application{
 
         tabPane = new TabPane();
         tabPane.getTabs().add(new InfoTab());
-        tabPane.getTabs().add(new Document(fileToOpen));
 
         fileMenu.getItems().addAll(openMenuItem);
         menuBar.getMenus().addAll(fileMenu);
@@ -60,41 +55,6 @@ public class GUIManager extends Application{
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public void showStartDialog() {
-        Stage stage = new Stage();
-        VBox vBox = new VBox(20);
-        HBox row1 = new HBox(20);
-        HBox row2 = new HBox(20);
-        HBox row3 = new HBox(20);
-        Scene scene = new Scene(vBox, 500, 300);
-
-        Text title = new Text("Bitte wählen Sie eine Datei aus.");
-        Text fileChoosed = new Text("Noch keine Datei ausgewählt.");
-        Button openFileChooserButton = new Button("Datei auswählen");
-        FileChooser fileChooser = new FileChooser();
-        Button openMainWindow = new Button("Datei öffnen");
-        openMainWindow.setOnAction(value -> stage.close());
-        openFileChooserButton.setOnAction(value -> {
-            fileToOpen = fileChooser.showOpenDialog(scene.getWindow());
-            fileChoosed.setText(fileToOpen.getPath());
-        });
-
-        row1.getChildren().addAll(title);
-        row1.setAlignment(Pos.CENTER);
-
-        row2.getChildren().addAll(fileChoosed, openFileChooserButton);
-        row2.setAlignment(Pos.CENTER);
-
-        row3.getChildren().addAll(openMainWindow);
-        row3.setAlignment(Pos.CENTER);
-
-        vBox.getChildren().addAll(row1, row2, row3);
-
-        stage.setScene(scene);
-        stage.setTitle("Datei auswählen");
-        stage.showAndWait();
     }
 
     public static void launch() {
