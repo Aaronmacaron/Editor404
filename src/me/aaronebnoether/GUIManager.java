@@ -1,6 +1,7 @@
 package me.aaronebnoether;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -15,13 +16,16 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+/**
+ * GUIManager is a general class for managing GUI related stuff. It creates the Main window and adds the GUI Layout.
+ *
+ * @author Aaron Ebnöther
+ */
 
-public class GUIManager extends Application{
+public class GUIManager extends Application {
 
-    BorderPane root;
-    Scene scene;
-    Stage stage;
-    TabPane tabPane;
+    private Scene scene;
+    private TabPane tabPane;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -29,35 +33,43 @@ public class GUIManager extends Application{
     }
 
     private void init(Stage primaryStage) {
-        stage = primaryStage;
-        root = new BorderPane();
-        scene = new Scene(root, 800, 500);
+
+        BorderPane rootPane = new BorderPane();
+        scene = new Scene(rootPane, 800, 500);
 
         //Menubar
         MenuBar menuBar = new MenuBar();
+
         Menu fileMenu = new Menu("File");
 
+        //Create "File -> Open" MenuItem
         MenuItem openMenuItem = new MenuItem("Open");
         openMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
-        openMenuItem.setOnAction(value -> {
-            File file = new FileChooser().showOpenDialog(scene.getWindow());
-            tabPane.getTabs().add(new Document(file));
-        });
-
-        tabPane = new TabPane();
-        tabPane.getTabs().add(new InfoTab());
+        openMenuItem.setOnAction(this::onFileOpen);
 
         fileMenu.getItems().addAll(openMenuItem);
         menuBar.getMenus().addAll(fileMenu);
-        root.setTop(menuBar);
-        root.setCenter(tabPane);
 
-        primaryStage.setTitle("Hello World");
+        //Tabpane
+        tabPane = new TabPane();
+        tabPane.getTabs().add(new InfoTab());
+
+        //Add Controls to BorderPane
+        rootPane.setTop(menuBar);
+        rootPane.setCenter(tabPane);
+
+        //Create Window
+        primaryStage.setTitle("404 Code Viewer");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    public static void launch() {
+    private void onFileOpen(ActionEvent value) {
+        File file = new FileChooser().showOpenDialog(scene.getWindow());
+        tabPane.getTabs().add(new Document(file));
+    }
+
+    static void launch() {
         Application.launch();
     }
 }
