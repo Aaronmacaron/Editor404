@@ -43,9 +43,14 @@ public class GUIManager extends Application {
         //Create "File -> Open" MenuItem
         MenuItem openMenuItem = new MenuItem("Open");
         openMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
-        openMenuItem.setOnAction(this::onFileOpen);
+        openMenuItem.setOnAction(this::onFileOpenClick);
 
-        fileMenu.getItems().addAll(openMenuItem);
+        //Create "File -> Close" MenuItem
+        MenuItem closeMenuItem = new MenuItem("Close");
+        closeMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN));
+        closeMenuItem.setOnAction(this::onTabCloseClick);
+
+        fileMenu.getItems().addAll(openMenuItem, closeMenuItem);
         menuBar.getMenus().addAll(fileMenu);
 
         //Tabpane
@@ -63,7 +68,7 @@ public class GUIManager extends Application {
         primaryStage.show();
     }
 
-    private void onFileOpen(ActionEvent value) {
+    private void onFileOpenClick(ActionEvent value) {
         File file = new FileChooser().showOpenDialog(scene.getWindow());
         if (file != null) {
             tabPane.getTabs().add(new Document(file));
@@ -75,6 +80,12 @@ public class GUIManager extends Application {
             tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         } else { //Otherwise the close buttons are added
             tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
+        }
+    }
+
+    private void onTabCloseClick(ActionEvent event) {
+        if (tabPane.getTabs().size() != 1) { //If there's only one tab you can't close it
+            tabPane.getTabs().remove(tabPane.getSelectionModel().getSelectedItem());
         }
     }
 
