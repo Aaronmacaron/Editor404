@@ -5,6 +5,7 @@ import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -64,6 +65,7 @@ public class GUIManager extends Application {
 
         //Create Window
         primaryStage.setTitle("404 Code Viewer");
+        primaryStage.getIcons().add(new Image("/img/icon.png", 100, 0, false, false));
         primaryStage.setScene(scene);
         primaryStage.show();
     }

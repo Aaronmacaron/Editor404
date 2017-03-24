@@ -22,6 +22,7 @@ public class InfoTab extends Tab{
         Paint textColor = Color.web("BABABA");
         Font titleFont = new Font("Open sans", 23);
         Font normalFont = new Font("Open sans", 16);
+        Font semiboldFont = new Font("Open sans semibold", 16);
         Insets padding = new Insets(20);
         Insets shortcutInsets = new Insets(0, 0, 30, 0);
 
@@ -57,9 +58,18 @@ public class InfoTab extends Tab{
 
         Text openShortcut = new Text("CTRL + O");
         openShortcut.setFill(textColor);
-        openShortcut.setFont(normalFont);
+        openShortcut.setFont(semiboldFont);
         row2.getChildren().add(openShortcut);
 
+        Text closeText = new Text("Dokument schliessen: ");
+        closeText.setFill(textColor);
+        closeText.setFont(normalFont);
+        row3.getChildren().add(closeText);
+
+        Text closeShortcut = new Text("CTRL + W");
+        closeShortcut.setFill(textColor);
+        closeShortcut.setFont(semiboldFont);
+        row3.getChildren().add(closeShortcut);
 
         setContent(vBox);
     }
