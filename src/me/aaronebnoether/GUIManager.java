@@ -1,12 +1,10 @@
 package me.aaronebnoether;
 
 import javafx.application.Application;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -52,6 +50,7 @@ public class GUIManager extends Application {
 
         //Tabpane
         tabPane = new TabPane();
+        tabPane.getTabs().addListener(this::onTabPaneChange);
         tabPane.getTabs().add(new InfoTab());
 
         //Add Controls to BorderPane
@@ -68,6 +67,14 @@ public class GUIManager extends Application {
         File file = new FileChooser().showOpenDialog(scene.getWindow());
         if (file != null) {
             tabPane.getTabs().add(new Document(file));
+        }
+    }
+
+    private void onTabPaneChange(ListChangeListener.Change change) {
+        if (tabPane.getTabs().size() == 1) { //If there's only one tab the close button gets removed
+            tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        } else { //Otherwise the close buttons are added
+            tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
         }
     }
 
