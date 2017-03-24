@@ -66,7 +66,9 @@ public class GUIManager extends Application {
 
     private void onFileOpen(ActionEvent value) {
         File file = new FileChooser().showOpenDialog(scene.getWindow());
-        tabPane.getTabs().add(new Document(file));
+        if (file != null) {
+            tabPane.getTabs().add(new Document(file));
+        }
     }
 
     static void launch() {
