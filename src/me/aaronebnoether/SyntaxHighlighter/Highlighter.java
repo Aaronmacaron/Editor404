@@ -19,103 +19,22 @@ public class Highlighter {
     private final static String SC_FLAG = "\uE017";
     private final static String SC_END_FLAG = "\uE018";
 
-    public static ArrayList<Text> getHighlightedTexts(String text){
+    public static ArrayList<Text> getHighlightedTexts(String text) {
         return getTextsOfHighlightedString(getHighlightedString(text));
     }
 
     public static ArrayList<Text> getTextsOfHighlightedString(String hlString) {
         ArrayList<Text> texts = new ArrayList<>();
         String currentColor = "AAAAAA";
-        String typeExpected = NM_FLAG;
         for (int i = 0; i < hlString.length(); i++) {
-            String flagRange = hlString.substring(i, i + KW_FLAG.length() > hlString.length() ? i : i + KW_FLAG.length());
-            switch (flagRange) {
-                case KW_FLAG: {
-                    if (typeExpected.equals(NM_FLAG)) {
-                        if (currentColor.equals("AAAAAA")) {
-                            currentColor = "CC7832";
-                        }
-                        typeExpected = KW_END_FLAG;
-                    }
-                    hlString = new StringBuilder(hlString).delete(i, i + KW_FLAG.length()).toString();
-                    i--;
-                    continue;
-                }
-                case ST_FLAG: {
-                    if (typeExpected.equals(NM_FLAG)) {
-                        if (currentColor.equals("AAAAAA")) {
-                            currentColor = "6A8759";
-                        }
-                        typeExpected = ST_END_FLAG;
-                    }
-                    hlString = new StringBuilder(hlString).delete(i, i + ST_FLAG.length()).toString();
-                    i--;
-                    continue;
-                }
-                case CO_FLAG: {
-                    if (typeExpected.equals(NM_FLAG)) {
-                        if (currentColor.equals("AAAAAA")) {
-                            currentColor = "629755";
-                        }
-                        typeExpected = CO_END_FLAG;
-                    }
-                    hlString = new StringBuilder(hlString).delete(i, i + CO_FLAG.length()).toString();
-                    i--;
-                    continue;
-                }
-                case SC_FLAG: {
-                    if (typeExpected.equals(NM_FLAG)) {
-                        if (currentColor.equals("AAAAAA")) {
-                            currentColor = "AAAAAA";
-                        }
-                        typeExpected = SC_END_FLAG;
-                    }
-                    hlString = new StringBuilder(hlString).delete(i, i + SC_FLAG.length()).toString();
-                    i--;
-                    continue;
-                }
-                case KW_END_FLAG: {
-                    if (typeExpected.equals(KW_END_FLAG)) {
-                        currentColor = "AAAAAA";
-                        typeExpected = NM_FLAG;
-                    }
-                    hlString = new StringBuilder(hlString).delete(i, i + KW_FLAG.length()).toString();
-                    i--;
-                    continue;
-                }
-                case ST_END_FLAG: {
-                    if (typeExpected.equals(ST_END_FLAG)) {
-                        currentColor = "AAAAAA";
-                        typeExpected = NM_FLAG;
-                    }
-                    hlString = new StringBuilder(hlString).delete(i, i + ST_FLAG.length()).toString();
-                    i--;
-                    continue;
-                }
-                case CO_END_FLAG: {
-                    if (typeExpected.equals(CO_END_FLAG)) {
-                        currentColor = "AAAAAA";
-                        typeExpected = NM_FLAG;
-                    }
-                    hlString = new StringBuilder(hlString).delete(i, i + CO_FLAG.length()).toString();
-                    i--;
-                    continue;
-                }
-                case SC_END_FLAG: {
-                    if (typeExpected.equals(SC_END_FLAG)) {
-                        currentColor = "AAAAAA";
-                        typeExpected = NM_FLAG;
-                    }
-                    hlString = new StringBuilder(hlString).delete(i, i + SC_FLAG.length()).toString();
-                    i--;
-                    continue;
-                }
-                case NM_FLAG: {
-                    currentColor = "AAAAAA";
-                    hlString = new StringBuilder(hlString).delete(i, i + KW_FLAG.length()).toString();
-                    i--;
-                    continue;
-                }
+            String flagRange = hlString.substring(i, (i + Flag.getFlagLength() > hlString.length()) ? i : (i + Flag.getFlagLength()));
+
+            if (Flag.contains(flagRange)) {
+                Flag flag = Flag.getFlagByString(flagRange);
+                currentColor = flag.getColor();
+                hlString = new StringBuilder(hlString).delete(i, i + flagRange.length()).toString();
+                i--;
+                continue;
             }
             Text text = new Text();
             if (i >= hlString.length()) {
