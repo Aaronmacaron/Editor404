@@ -9,15 +9,15 @@ import java.util.regex.Pattern;
 
 public class Highlighter {
 
-    private final static String KW_FLAG = "\\:k:\\";
-    private final static String KW_END_FLAG = "\\.k.\\";
-    private final static String ST_FLAG = "\\:s:\\";
-    private final static String ST_END_FLAG = "\\.s.\\";
-    private final static String NM_FLAG = "\\:n:\\";
-    private final static String CO_FLAG = "\\:c:\\";
-    private final static String CO_END_FLAG = "\\.c.\\";
-    private final static String SC_FLAG = "\\:a:\\";
-    private final static String SC_END_FLAG = "\\.a.\\";
+    private final static String KW_FLAG = "\uE010";
+    private final static String KW_END_FLAG = "\uE011";
+    private final static String ST_FLAG = "\uE012";
+    private final static String ST_END_FLAG = "\uE013";
+    private final static String NM_FLAG = "\uE014";
+    private final static String CO_FLAG = "\uE015";
+    private final static String CO_END_FLAG = "\uE016";
+    private final static String SC_FLAG = "\uE017";
+    private final static String SC_END_FLAG = "\uE018";
 
     public static ArrayList<Text> getHighlightedTexts(String text){
         return getTextsOfHighlightedString(getHighlightedString(text));
@@ -28,7 +28,7 @@ public class Highlighter {
         String currentColor = "AAAAAA";
         String typeExpected = NM_FLAG;
         for (int i = 0; i < hlString.length(); i++) {
-            String flagRange = hlString.substring(i, i + 5 > hlString.length() ? i : i + 5);
+            String flagRange = hlString.substring(i, i + KW_FLAG.length() > hlString.length() ? i : i + KW_FLAG.length());
             switch (flagRange) {
                 case KW_FLAG: {
                     if (typeExpected.equals(NM_FLAG)) {
@@ -37,7 +37,7 @@ public class Highlighter {
                         }
                         typeExpected = KW_END_FLAG;
                     }
-                    hlString = new StringBuilder(hlString).delete(i, i + 5).toString();
+                    hlString = new StringBuilder(hlString).delete(i, i + KW_FLAG.length()).toString();
                     i--;
                     continue;
                 }
@@ -112,7 +112,7 @@ public class Highlighter {
                 }
                 case NM_FLAG: {
                     currentColor = "AAAAAA";
-                    hlString = new StringBuilder(hlString).delete(i, i + 5).toString();
+                    hlString = new StringBuilder(hlString).delete(i, i + KW_FLAG.length()).toString();
                     i--;
                     continue;
                 }
