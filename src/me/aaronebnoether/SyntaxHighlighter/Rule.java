@@ -7,7 +7,9 @@ public enum Rule {
             "|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch" +
             "|synchronized|this|throw|throws|transient|try|void|volatile|while|false|null|true)\\b", Flag.KW_FLAG, Flag.KW_END_FLAG),
     ST("\"([^\\\"]+)*\"|'[^\\\"]+'", Flag.ST_FLAG, Flag.ST_END_FLAG),
-    CO("(\\/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+\\/)|(\\/\\/.*)", Flag.CO_FLAG, Flag.CO_END_FLAG);
+    CO("(\\/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+\\/)|(\\/\\/.*)", Flag.CO_FLAG, Flag.CO_END_FLAG),
+    AN("@.+", Flag.AN_FLAG, Flag.AN_END_FLAG),
+    SC("\\+|-|\\*|\\/|=|<|>|\\.|\\||\\(|\\)|\\{|\\}|\\;|\\,|:", Flag.SC_FLAG, Flag.SC_END_FLAG);
 
     private String pattern;
     private Flag startFlag;
