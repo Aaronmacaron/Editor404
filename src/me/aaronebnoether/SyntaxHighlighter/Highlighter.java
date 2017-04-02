@@ -9,16 +9,6 @@ import java.util.regex.Pattern;
 
 public class Highlighter {
 
-    private final static String KW_FLAG = "\uE010";
-    private final static String KW_END_FLAG = "\uE011";
-    private final static String ST_FLAG = "\uE012";
-    private final static String ST_END_FLAG = "\uE013";
-    private final static String NM_FLAG = "\uE014";
-    private final static String CO_FLAG = "\uE015";
-    private final static String CO_END_FLAG = "\uE016";
-    private final static String SC_FLAG = "\uE017";
-    private final static String SC_END_FLAG = "\uE018";
-
     public static ArrayList<Text> getHighlightedTexts(String text) {
         return getTextsOfHighlightedString(getHighlightedString(text));
     }
@@ -51,63 +41,19 @@ public class Highlighter {
     }
 
     public static String getHighlightedString(String text) {
-        for (Rule rule : getRules()) {
+        for (Rule rule : Rule.values()) {
             Pattern pattern = Pattern.compile(rule.getPattern());
             Matcher matcher = pattern.matcher(text);
             int offset = 0;
             while (matcher.find()) {
-                switch (rule.getRuleName()) {
-                    case "KW": {
-                        StringBuilder stringBuilder = new StringBuilder(text).insert(matcher.start() + offset, KW_FLAG);
-                        offset += KW_FLAG.length();
-                        text = stringBuilder.toString();
-                        stringBuilder = new StringBuilder(text).insert(matcher.end() + offset, KW_END_FLAG);
-                        text = stringBuilder.toString();
-                        offset += NM_FLAG.length();
-                        break;
-                    }
-                    case "ST": {
-                        StringBuilder stringBuilder = new StringBuilder(text).insert(matcher.start() + offset, ST_FLAG);
-                        offset += ST_FLAG.length();
-                        text = stringBuilder.toString();
-                        stringBuilder = new StringBuilder(text).insert(matcher.end() + offset, ST_END_FLAG);
-                        text = stringBuilder.toString();
-                        offset += NM_FLAG.length();
-                        break;
-                    }
-                    case "CO": {
-                        StringBuilder stringBuilder = new StringBuilder(text).insert(matcher.start() + offset, CO_FLAG);
-                        offset += CO_FLAG.length();
-                        text = stringBuilder.toString();
-                        stringBuilder = new StringBuilder(text).insert(matcher.end() + offset, CO_END_FLAG);
-                        text = stringBuilder.toString();
-                        offset += NM_FLAG.length();
-                        break;
-                    }
-                    case "SC": {
-                        StringBuilder stringBuilder = new StringBuilder(text).insert(matcher.start() + offset, SC_FLAG);
-                        offset += SC_FLAG.length();
-                        text = stringBuilder.toString();
-                        stringBuilder = new StringBuilder(text).insert(matcher.end() + offset, SC_END_FLAG);
-                        text = stringBuilder.toString();
-                        offset += NM_FLAG.length();
-                        break;
-                    }
-                }
+                StringBuilder stringBuilder = new StringBuilder(text).insert(matcher.start() + offset, rule.getStartFlag());
+                offset += rule.getStartFlag().toString().length();
+                text = stringBuilder.toString();
+                stringBuilder = new StringBuilder(text).insert(matcher.end() + offset, rule.getEndFlag());
+                text = stringBuilder.toString();
+                offset += Flag.getFlagLength();
             }
         }
         return text;
-    }
-
-    private static ArrayList<Rule> getRules() {
-        ArrayList<Rule> returnList = new ArrayList<>();
-        returnList.add(new Rule("\\b(abstract|assert|boolean|break|byte|case|catch|char|class|const|continue" +
-                "|default|do|double|else|enmu|extends|final|finally|float|for|goto|if|implements|import|instanceof|int" +
-                "|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch" +
-                "|synchronized|this|throw|throws|transient|try|void|volatile|while|false|null|true)\\b", "KW"));
-        returnList.add(new Rule("\"([^\\\"]+)*\"|'[^\\\"]+'", "ST"));
-        returnList.add(new Rule("(\\/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+\\/)|(\\/\\/.*)", "CO"));
-        returnList.add(new Rule("\\uF002", "SC"));
-        return returnList;
     }
 }

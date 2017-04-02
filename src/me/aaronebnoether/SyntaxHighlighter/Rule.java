@@ -1,19 +1,33 @@
 package me.aaronebnoether.SyntaxHighlighter;
 
-public class Rule {
-    private String pattern;
-    private String ruleName;
+public enum Rule {
 
-    public Rule(String pattern, String ruleName) {
+    KW("\\b(abstract|assert|boolean|break|byte|case|catch|char|class|const|continue" +
+            "|default|do|double|else|enmu|extends|final|finally|float|for|goto|if|implements|import|instanceof|int" +
+            "|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch" +
+            "|synchronized|this|throw|throws|transient|try|void|volatile|while|false|null|true)\\b", Flag.KW_FLAG, Flag.KW_END_FLAG),
+    ST("\"([^\\\"]+)*\"|'[^\\\"]+'", Flag.ST_FLAG, Flag.ST_END_FLAG),
+    CO("(\\/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+\\/)|(\\/\\/.*)", Flag.CO_FLAG, Flag.CO_END_FLAG);
+
+    private String pattern;
+    private Flag startFlag;
+    private Flag endFlag;
+
+    Rule(String pattern, Flag startFlag, Flag endFlag) {
         this.pattern = pattern;
-        this.ruleName = ruleName;
+        this.startFlag = startFlag;
+        this.endFlag = endFlag;
     }
 
     public String getPattern() {
         return pattern;
     }
 
-    public String getRuleName() {
-        return ruleName;
+    public Flag getStartFlag() {
+        return startFlag;
+    }
+
+    public Flag getEndFlag() {
+        return endFlag;
     }
 }
