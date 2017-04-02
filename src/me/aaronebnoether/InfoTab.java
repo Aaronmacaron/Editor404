@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-public class InfoTab extends Tab{
+public class InfoTab extends Tab {
 
     public InfoTab() {
         setText("404 Code Viewer");

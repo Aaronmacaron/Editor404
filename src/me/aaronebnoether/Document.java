@@ -17,7 +17,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class Document extends Tab{
+public class Document extends Tab {
     private File file;
     private BorderPane pane;
     private TextFlow textFlow;

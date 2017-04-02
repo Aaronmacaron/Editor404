@@ -25,7 +25,7 @@ public enum Flag {
     private String color;
     private Flag expected;
 
-    private Flag(String flag, boolean isStartFlag, String color) {
+    Flag(String flag, boolean isStartFlag, String color) {
         this.flag = flag;
         this.isStartFlag = isStartFlag;
         this.color = color;
