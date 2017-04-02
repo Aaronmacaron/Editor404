@@ -25,13 +25,15 @@ public class Highlighter {
 
     public static ArrayList<Text> getTextsOfHighlightedString(String hlString) {
         ArrayList<Text> texts = new ArrayList<>();
-        String currentColor = "AAAAAA";
+        Flag currentFlag = Flag.START_FLAG;
         for (int i = 0; i < hlString.length(); i++) {
             String flagRange = hlString.substring(i, (i + Flag.getFlagLength() > hlString.length()) ? i : (i + Flag.getFlagLength()));
 
             if (Flag.contains(flagRange)) {
                 Flag flag = Flag.getFlagByString(flagRange);
-                currentColor = flag.getColor();
+                if (flag == currentFlag.getExpected() || !currentFlag.isStartFlag()) {
+                    currentFlag = flag;
+                }
                 hlString = new StringBuilder(hlString).delete(i, i + flagRange.length()).toString();
                 i--;
                 continue;
@@ -42,7 +44,7 @@ public class Highlighter {
             } else {
                 text.setText(String.valueOf(hlString.charAt(i)));
             }
-            text.setFill(Color.web(currentColor));
+            text.setFill(Color.web(currentFlag.getColor()));
             texts.add(text);
         }
         return texts;
@@ -104,8 +106,8 @@ public class Highlighter {
                 "|interface|long|native|new|package|private|protected|public|return|short|static|strictfp|super|switch" +
                 "|synchronized|this|throw|throws|transient|try|void|volatile|while|false|null|true)\\b", "KW"));
         returnList.add(new Rule("\"([^\\\"]+)*\"|'[^\\\"]+'", "ST"));
-        returnList.add(new Rule("//.*|/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+/", "CO"));
-        returnList.add(new Rule("(\\(|\\)|=|&|\\*|\\+|\\-|\\/|\\<|\\>|\\{|\\}|\\;|\\|)", "SC"));
+        returnList.add(new Rule("(\\/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+\\/)|(\\/\\/.*)", "CO"));
+        returnList.add(new Rule("\\uF002", "SC"));
         return returnList;
     }
 }

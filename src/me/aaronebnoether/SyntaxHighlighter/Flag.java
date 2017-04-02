@@ -9,11 +9,21 @@ public enum Flag {
     CO_FLAG("\uE015", true, "629755"),
     CO_END_FLAG("\uE016", false, null),
     SC_FLAG("\uE017", true, "AAAAAA"),
-    SC_END_FLAG("\uE018", false, null);
+    SC_END_FLAG("\uE018", false, null),
+    START_FLAG("\uE019", false, null);
+
+    static {
+        KW_FLAG.expected = KW_END_FLAG;
+        ST_FLAG.expected = ST_END_FLAG;
+        CO_FLAG.expected = CO_END_FLAG;
+        SC_FLAG.expected = SC_END_FLAG;
+    }
+
 
     private String flag;
     private boolean isStartFlag;
     private String color;
+    private Flag expected;
 
     private Flag(String flag, boolean isStartFlag, String color) {
         this.flag = flag;
@@ -58,4 +68,7 @@ public enum Flag {
         return null;
     }
 
+    public Flag getExpected() {
+        return expected;
+    }
 }
