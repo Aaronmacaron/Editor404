@@ -51,7 +51,12 @@ public class GUIManager extends Application {
         closeMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN));
         closeMenuItem.setOnAction(this::onTabCloseClick);
 
-        fileMenu.getItems().addAll(openMenuItem, closeMenuItem);
+        //Create "File -> Settings" MenuItem
+        MenuItem settingsMenuItem = new MenuItem("Settings");
+        settingsMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN));
+        settingsMenuItem.setOnAction(value -> new SettingsManager());
+
+        fileMenu.getItems().addAll(openMenuItem, closeMenuItem, settingsMenuItem);
         menuBar.getMenus().addAll(fileMenu);
 
         //Tabpane
