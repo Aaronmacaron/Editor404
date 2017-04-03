@@ -1,102 +1,97 @@
 package me.aaronebnoether;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
+import javafx.collections.ListChangeListener;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import me.aaronebnoether.SyntaxHighlighter.Highlighter;
 
 import java.io.File;
 
+/**
+ * GUIManager is a general class for managing GUI related stuff. It creates the Main window and adds the GUI Layout.
+ *
+ * @author Aaron Ebnöther
+ */
 
-public class GUIManager extends Application{
+public class GUIManager extends Application {
 
-    BorderPane root;
-    Scene scene;
-    Stage stage;
-    File fileToOpen;
-    TabPane tabPane;
+    private Scene scene;
+    private TabPane tabPane;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        showStartDialog();
         init(primaryStage);
     }
 
     private void init(Stage primaryStage) {
-        stage = primaryStage;
-        root = new BorderPane();
-        scene = new Scene(root, 800, 500);
+
+        BorderPane rootPane = new BorderPane();
+        scene = new Scene(rootPane, 800, 500);
 
         //Menubar
         MenuBar menuBar = new MenuBar();
+
         Menu fileMenu = new Menu("File");
 
+        //Create "File -> Open" MenuItem
         MenuItem openMenuItem = new MenuItem("Open");
         openMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN));
-        openMenuItem.setOnAction(value -> {
-            File file = new FileChooser().showOpenDialog(scene.getWindow());
-            tabPane.getTabs().add(new Document(file));
-        });
+        openMenuItem.setOnAction(this::onFileOpenClick);
 
-        tabPane = new TabPane();
-        tabPane.getTabs().add(new Document(fileToOpen));
+        //Create "File -> Close" MenuItem
+        MenuItem closeMenuItem = new MenuItem("Close");
+        closeMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN));
+        closeMenuItem.setOnAction(this::onTabCloseClick);
 
-        fileMenu.getItems().addAll(openMenuItem);
+        fileMenu.getItems().addAll(openMenuItem, closeMenuItem);
         menuBar.getMenus().addAll(fileMenu);
-        root.setTop(menuBar);
-        root.setCenter(tabPane);
 
-        primaryStage.setTitle("Hello World");
+        //Tabpane
+        tabPane = new TabPane();
+        tabPane.getTabs().addListener(this::onTabPaneChange);
+        tabPane.getTabs().add(new InfoTab());
+
+        //Add Controls to BorderPane
+        rootPane.setTop(menuBar);
+        rootPane.setCenter(tabPane);
+
+        //Create Window
+        primaryStage.setTitle("404 Code Viewer");
+        primaryStage.getIcons().add(new Image("/img/icon.png", 100, 0, false, false));
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    public void showStartDialog() {
-        Stage stage = new Stage();
-        VBox vBox = new VBox(20);
-        HBox row1 = new HBox(20);
-        HBox row2 = new HBox(20);
-        HBox row3 = new HBox(20);
-        Scene scene = new Scene(vBox, 500, 300);
-
-        Text title = new Text("Bitte wählen Sie eine Datei aus.");
-        Text fileChoosed = new Text("Noch keine Datei ausgewählt.");
-        Button openFileChooserButton = new Button("Datei auswählen");
-        FileChooser fileChooser = new FileChooser();
-        Button openMainWindow = new Button("Datei öffnen");
-        openMainWindow.setOnAction(value -> stage.close());
-        openFileChooserButton.setOnAction(value -> {
-            fileToOpen = fileChooser.showOpenDialog(scene.getWindow());
-            fileChoosed.setText(fileToOpen.getPath());
-        });
-
-        row1.getChildren().addAll(title);
-        row1.setAlignment(Pos.CENTER);
-
-        row2.getChildren().addAll(fileChoosed, openFileChooserButton);
-        row2.setAlignment(Pos.CENTER);
-
-        row3.getChildren().addAll(openMainWindow);
-        row3.setAlignment(Pos.CENTER);
-
-        vBox.getChildren().addAll(row1, row2, row3);
-
-        stage.setScene(scene);
-        stage.setTitle("Datei auswählen");
-        stage.showAndWait();
+    private void onFileOpenClick(ActionEvent value) {
+        File file = new FileChooser().showOpenDialog(scene.getWindow());
+        if (file != null) {
+            tabPane.getTabs().add(new Document(file));
+        }
     }
 
-    public static void launch() {
+    private void onTabPaneChange(ListChangeListener.Change change) {
+        if (tabPane.getTabs().size() == 1) { //If there's only one tab the close button gets removed
+            tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        } else { //Otherwise the close buttons are added
+            tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
+        }
+    }
+
+    private void onTabCloseClick(ActionEvent event) {
+        if (tabPane.getTabs().size() != 1) { //If there's only one tab you can't close it
+            tabPane.getTabs().remove(tabPane.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    static void launch() {
         Application.launch();
     }
 }
