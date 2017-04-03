@@ -5,13 +5,15 @@ public enum Flag {
     KW_END_FLAG("\uE011", false, null),
     ST_FLAG("\uE012", true, "6A8759"),
     ST_END_FLAG("\uE013", false, null),
-    NM_FLAG("\uE014", true, "AAAAAA"),
     CO_FLAG("\uE015", true, "629755"),
     CO_END_FLAG("\uE016", false, null),
-    SC_FLAG("\uE017", true, "9876AA"),
+    SC_FLAG("\uE017", true, "70637A"),
     SC_END_FLAG("\uE018", false, null),
     AN_FLAG("\uE020", true, "BBB529"),
     AN_END_FLAG("\uE021", false, null),
+    DI_FLAG("\uE022", true, "6897BB"),
+    DI_END_FLAG("\uE023", false, null),
+    NM_FLAG("\uE014", true, "AAAAAA"),
     START_FLAG("\uE019", false, null);
 
     static {
@@ -20,6 +22,7 @@ public enum Flag {
         CO_FLAG.expected = CO_END_FLAG;
         SC_FLAG.expected = SC_END_FLAG;
         AN_FLAG.expected = AN_END_FLAG;
+        DI_FLAG.expected = DI_END_FLAG;
     }
 
 

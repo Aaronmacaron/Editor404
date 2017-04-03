@@ -9,7 +9,8 @@ public enum Rule {
     ST("\"([^\\\"]+)*\"|'[^\\\"]+'", Flag.ST_FLAG, Flag.ST_END_FLAG),
     CO("(\\/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+\\/)|(\\/\\/.*)", Flag.CO_FLAG, Flag.CO_END_FLAG),
     AN("@.+", Flag.AN_FLAG, Flag.AN_END_FLAG),
-    SC("\\+|-|\\*|\\/|=|<|>|\\.|\\||\\(|\\)|\\{|\\}|\\;|\\,|:", Flag.SC_FLAG, Flag.SC_END_FLAG);
+    SC("\\+|-|\\*|\\/|=|<|>|\\.|\\||\\(|\\)|\\{|\\}|\\;|\\,|:", Flag.SC_FLAG, Flag.SC_END_FLAG),
+    DI("\\d+|(\\d+)\\.(\\d+)|\\.(\\d)+", Flag.DI_FLAG, Flag.DI_END_FLAG);
 
     private String pattern;
     private Flag startFlag;
