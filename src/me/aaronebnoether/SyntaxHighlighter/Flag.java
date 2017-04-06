@@ -1,20 +1,24 @@
 package me.aaronebnoether.SyntaxHighlighter;
 
+import me.aaronebnoether.SettingsManager;
+
+import java.util.Set;
+
 public enum Flag {
-    KW_FLAG("\uE010", true, "CC7832"),
-    KW_END_FLAG("\uE011", false, null),
-    ST_FLAG("\uE012", true, "6A8759"),
-    ST_END_FLAG("\uE013", false, null),
-    CO_FLAG("\uE015", true, "629755"),
-    CO_END_FLAG("\uE016", false, null),
-    SC_FLAG("\uE017", true, "70637A"),
-    SC_END_FLAG("\uE018", false, null),
-    AN_FLAG("\uE020", true, "BBB529"),
-    AN_END_FLAG("\uE021", false, null),
-    DI_FLAG("\uE022", true, "6897BB"),
-    DI_END_FLAG("\uE023", false, null),
-    NM_FLAG("\uE014", true, "AAAAAA"),
-    START_FLAG("\uE019", false, null);
+    KW_FLAG("\uE010", true),
+    KW_END_FLAG("\uE011", false),
+    ST_FLAG("\uE012", true),
+    ST_END_FLAG("\uE013", false),
+    CO_FLAG("\uE015", true),
+    CO_END_FLAG("\uE016", false),
+    SC_FLAG("\uE017", true),
+    SC_END_FLAG("\uE018", false),
+    AN_FLAG("\uE020", true),
+    AN_END_FLAG("\uE021", false),
+    DI_FLAG("\uE022", true),
+    DI_END_FLAG("\uE023", false),
+    NM_FLAG("\uE014", true),
+    START_FLAG("\uE019", false);
 
     static {
         KW_FLAG.expected = KW_END_FLAG;
@@ -23,18 +27,25 @@ public enum Flag {
         SC_FLAG.expected = SC_END_FLAG;
         AN_FLAG.expected = AN_END_FLAG;
         DI_FLAG.expected = DI_END_FLAG;
+
+        KW_FLAG.color = "kwColor";
+        ST_FLAG.color = "stColor";
+        CO_FLAG.color = "coColor";
+        SC_FLAG.color = "scColor";
+        AN_FLAG.color = "anColor";
+        DI_FLAG.color = "diColor";
+        NM_FLAG.color = "nmColor";
     }
 
 
     private String flag;
     private boolean isStartFlag;
-    private String color;
+    private String color = "#FFFFFF";
     private Flag expected;
 
-    Flag(String flag, boolean isStartFlag, String color) {
+    Flag(String flag, boolean isStartFlag) {
         this.flag = flag;
         this.isStartFlag = isStartFlag;
-        this.color = color;
     }
 
     public static int getFlagLength() {
@@ -62,7 +73,7 @@ public enum Flag {
         if (!isStartFlag) {
             return NM_FLAG.getColor();
         }
-        return color;
+        return SettingsManager.get(color);
     }
 
     public static Flag getFlagByString(String string) {
