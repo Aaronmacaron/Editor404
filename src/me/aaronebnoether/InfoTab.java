@@ -43,7 +43,11 @@ public class InfoTab extends Tab {
         row3.setPadding(shortcutInsets);
         row3.setAlignment(Pos.CENTER);
 
-        vBox.getChildren().addAll(row1, row2, row3);
+        HBox row4 = new HBox();
+        row4.setPadding(shortcutInsets);
+        row4.setAlignment(Pos.CENTER);
+
+        vBox.getChildren().addAll(row1, row2, row3, row4);
 
         Text welcomeText = new Text("Willkommen zum 404 Code Viewer");
         welcomeText.setTextAlignment(TextAlignment.CENTER);
@@ -70,6 +74,16 @@ public class InfoTab extends Tab {
         closeShortcut.setFill(textColor);
         closeShortcut.setFont(semiboldFont);
         row3.getChildren().add(closeShortcut);
+
+        Text settingsText = new Text("Einstellungen öffnen: ");
+        settingsText.setFill(textColor);
+        settingsText.setFont(normalFont);
+        row4.getChildren().add(settingsText);
+
+        Text settingsShortcut = new Text("CTRL + E");
+        settingsShortcut.setFill(textColor);
+        settingsShortcut.setFont(semiboldFont);
+        row4.getChildren().add(settingsShortcut);
 
         setContent(vBox);
     }
