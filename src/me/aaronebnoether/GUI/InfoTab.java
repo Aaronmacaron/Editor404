@@ -1,4 +1,4 @@
-package me.aaronebnoether;
+package me.aaronebnoether.GUI;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,14 +10,31 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * The InfoTab class is a class that represents a Tab with static content. The InfoTab is shown at the start of the
+ * Application. It provides a quick explanation of the shortcuts that are available in the Application.
+ *
+ * @author Aaron Ebnöther
+ */
+
 public class InfoTab extends Tab {
 
+    /**
+     * The constructor consists of only one call to the initGui method.
+     */
+
     public InfoTab() {
-        setText("404 Code Viewer");
         initGui();
     }
 
+    /**
+     * The initGui method sets the contents of the Tab.
+     */
+
     private void initGui() {
+        setText("404 Code Viewer"); //Sets the Tab name
+
+        // Define colors, insets, colors and backgrounds
         Background background = new Background(new BackgroundFill(Color.web("46494C"), CornerRadii.EMPTY, Insets.EMPTY));
         Paint textColor = Color.web("BABABA");
         Font titleFont = new Font("Open sans", 23);
@@ -26,11 +43,13 @@ public class InfoTab extends Tab {
         Insets padding = new Insets(20);
         Insets shortcutInsets = new Insets(0, 0, 30, 0);
 
+        //VBox that contains all lines of text
         VBox vBox = new VBox();
         vBox.setBackground(background);
         vBox.setPadding(padding);
         vBox.setAlignment(Pos.TOP_CENTER);
 
+        //Every line of text gets its own HBox.
         HBox row1 = new HBox();
         row1.setPadding(shortcutInsets);
         row1.setAlignment(Pos.CENTER);
@@ -49,13 +68,14 @@ public class InfoTab extends Tab {
 
         vBox.getChildren().addAll(row1, row2, row3, row4);
 
-        Text welcomeText = new Text("Willkommen zum 404 Code Viewer");
+        //The following blocks adds the text to the HBoxes.
+        Text welcomeText = new Text("Welcome to the 404 Code Viewer!");
         welcomeText.setTextAlignment(TextAlignment.CENTER);
         welcomeText.setFill(textColor);
         welcomeText.setFont(titleFont);
         row1.getChildren().add(welcomeText);
 
-        Text openText = new Text("Dokument öffnen: ");
+        Text openText = new Text("Open document: ");
         openText.setFill(textColor);
         openText.setFont(normalFont);
         row2.getChildren().add(openText);
@@ -65,7 +85,7 @@ public class InfoTab extends Tab {
         openShortcut.setFont(semiboldFont);
         row2.getChildren().add(openShortcut);
 
-        Text closeText = new Text("Dokument schliessen: ");
+        Text closeText = new Text("Close document: ");
         closeText.setFill(textColor);
         closeText.setFont(normalFont);
         row3.getChildren().add(closeText);
@@ -75,7 +95,7 @@ public class InfoTab extends Tab {
         closeShortcut.setFont(semiboldFont);
         row3.getChildren().add(closeShortcut);
 
-        Text settingsText = new Text("Einstellungen öffnen: ");
+        Text settingsText = new Text("Open settings: ");
         settingsText.setFill(textColor);
         settingsText.setFont(normalFont);
         row4.getChildren().add(settingsText);
@@ -85,6 +105,6 @@ public class InfoTab extends Tab {
         settingsShortcut.setFont(semiboldFont);
         row4.getChildren().add(settingsShortcut);
 
-        setContent(vBox);
+        setContent(vBox); //Finally set the content of the tab to the vBox
     }
 }

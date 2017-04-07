@@ -1,6 +1,6 @@
 package me.aaronebnoether;
 
-public enum ColorSetting {
+public enum Setting {
     KW("Keyword Color: ", "kwColor"),
     ST("String Color: ", "stColor"),
     CO("Comment Color: ", "coColor"),
@@ -12,7 +12,7 @@ public enum ColorSetting {
     private String displayText;
     private String settingsKey;
 
-    ColorSetting(String displayText, String settingsKey) {
+    Setting(String displayText, String settingsKey) {
 
         this.displayText = displayText;
         this.settingsKey = settingsKey;

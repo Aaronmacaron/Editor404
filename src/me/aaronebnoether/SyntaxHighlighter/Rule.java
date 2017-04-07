@@ -1,5 +1,11 @@
 package me.aaronebnoether.SyntaxHighlighter;
 
+/**
+ * This Enum contains all matching rules represented by a regular expression.
+ *
+ * @author Aaron Ebnöther
+ */
+
 public enum Rule {
 
     KW("\\b(abstract|assert|boolean|break|byte|case|catch|char|class|const|continue" +
@@ -16,19 +22,40 @@ public enum Rule {
     private Flag startFlag;
     private Flag endFlag;
 
+    /**
+     * The constructor assigns the passed values to the corresponding field.
+     *
+     * @param pattern is the regular expression.
+     * @param startFlag is the startFlag.
+     * @param endFlag is the endFlag.
+     */
+
     Rule(String pattern, Flag startFlag, Flag endFlag) {
         this.pattern = pattern;
         this.startFlag = startFlag;
         this.endFlag = endFlag;
     }
 
+    /**
+     * Getter for pattern.
+     */
+
     public String getPattern() {
         return pattern;
     }
 
+    /**
+     * Getter for startFlag.
+     */
+
     public Flag getStartFlag() {
         return startFlag;
     }
+
+
+    /**
+     * Getter for endFlag.
+     */
 
     public Flag getEndFlag() {
         return endFlag;
