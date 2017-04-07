@@ -41,9 +41,14 @@ public class Document extends Tab {
         setContent(pane);
     }
 
-    private void setText() {
+    public void setText() {
         String fileContent = removeWindowsLineEndings(readFile(file.getPath()));
         textFlow.getChildren().addAll(Highlighter.getHighlightedTexts(fileContent));
+    }
+
+    public void reRender() {
+        String fileContent = removeWindowsLineEndings(readFile(file.getPath()));
+        textFlow.getChildren().setAll(Highlighter.getHighlightedTexts(fileContent));
     }
 
     static String removeWindowsLineEndings(String s) {

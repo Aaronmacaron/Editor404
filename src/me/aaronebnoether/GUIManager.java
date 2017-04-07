@@ -1,6 +1,7 @@
 package me.aaronebnoether;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
@@ -23,8 +24,8 @@ import java.io.File;
 
 public class GUIManager extends Application {
 
-    private Scene scene;
-    private TabPane tabPane;
+    private static Scene scene;
+    private static TabPane tabPane;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -32,6 +33,8 @@ public class GUIManager extends Application {
     }
 
     private void init(Stage primaryStage) {
+
+        primaryStage.setOnCloseRequest(value -> Platform.exit());
 
         BorderPane rootPane = new BorderPane();
         scene = new Scene(rootPane, 800, 500);
@@ -94,6 +97,10 @@ public class GUIManager extends Application {
         if (tabPane.getTabs().size() != 1) { //If there's only one tab you can't close it
             tabPane.getTabs().remove(tabPane.getSelectionModel().getSelectedItem());
         }
+    }
+
+    public static TabPane getTabPane() {
+        return tabPane;
     }
 
     static void launch() {
